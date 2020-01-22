@@ -1,4 +1,4 @@
-# map-prototype-geojson
+# map-prototype-vector-tile
 
 vector tile を使用したマップのプロトタイプ
 
