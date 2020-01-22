@@ -1,6 +1,6 @@
 # map-prototype-geojson
 
-Geojsonを使用したマップのプロトタイプ
+vector tile を使用したマップのプロトタイプ
 
 ## Project setup
 ```
