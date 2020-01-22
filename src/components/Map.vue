@@ -15,7 +15,7 @@
         components:{},
         data () {
             return {
-                clickedTileId: null,
+                // clickedTileId: null,
             }
         },
         mounted () {
@@ -77,31 +77,44 @@
                 });
                 this.$store.commit('setVectorTileInstance',vectorLayer)
                 vectorLayer.on("click", (e)=>{
-                    this.clickedTileId = e.layer.properties["KEY_CODE"];
+                    // this.clickedTileId = e.layer.properties["KEY_CODE"];
                     // console.log(this.clickedTileId) //eslint-disable-line
-                    vectorLayer.bindPopup(this.clickedTileId)
+                    vectorLayer.bindPopup(e.layer.properties["KEY_CODE"])
+                });
+                vectorLayer.on("popupopen",(e)=>{
+                    vectorLayer.setFeatureStyle(e.layer.properties["KEY_CODE"],{
+                       fill:true,
+                       fillColor: "red",
+                       color: "green"
+                    }
+                    )
+                });
+                vectorLayer.on("popupclose",(e)=>{
+                    vectorLayer.setFeatureStyle(e.layer.properties["KEY_CODE"],
+                        this.sharedState.initialTileStyle
+                    )
                 });
                     
                 
                 this.$store.commit('addLayer', vectorLayer)  
 
             },
-            setFeatureStyleAsync(newval,oldval){
-                if(oldval){
-                    this.sharedState.vectorTileInstance.setFeatureStyle(oldval,this.sharedState.initialTileStyle)
-                }
-                this.sharedState.vectorTileInstance.setFeatureStyle(newval,{
-                    fill:true,
-                    fillColor: "red",
-                    color: "green"
-                })
-            },
+            // setFeatureStyleAsync(newval,oldval){
+            //     if(oldval){
+            //         this.sharedState.vectorTileInstance.setFeatureStyle(oldval,this.sharedState.initialTileStyle)
+            //     }
+            //     this.sharedState.vectorTileInstance.setFeatureStyle(newval,{
+            //         fill:true,
+            //         fillColor: "red",
+            //         color: "green"
+            //     })
+            // },
 
         },
         watch: {
-            clickedTileId: function(newval,oldval){
-                this.setFeatureStyleAsync(newval,oldval)
-            }
+            // clickedTileId: function(newval,oldval){
+            //     this.setFeatureStyleAsync(newval,oldval)
+            // }
         }
     }
 </script>
